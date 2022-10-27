@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tempo_template/services/location.dart';
-import 'package:tempo_template/services/networking.dart';
 import 'package:tempo_template/screens/location_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:tempo_template/services/weather.dart';
 
 const apiKey = '7a2ef7b63d58dc9c539554094a6890ba';
 
@@ -18,9 +17,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   late double longitude;
 
   void getData() async {
-    NetworkHelper networkHelper = NetworkHelper('https://api.openweathermap.org/'
-        'data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey&units=metric');
-    var weatherData = await networkHelper.getData();
+    var weatherData = await WeatherModel().getLocationWeather();
     pushToLocationScreen(weatherData);
   }
 
@@ -30,19 +27,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
     }));
   }
 
-  void getLocation() async {
-    Location location = Location();
-    await location.getCurrentLocation();
-
-    latitude = location.latitude;
-    longitude = location.longitude;
-
-    getData();
-  }
   @override
   void initState() {
     super.initState();
-    getLocation();
+    getData();
   }
   @override
   Widget build(BuildContext context) {
