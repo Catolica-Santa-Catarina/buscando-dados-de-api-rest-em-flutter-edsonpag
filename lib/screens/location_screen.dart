@@ -80,7 +80,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       style: kTempTextStyle,
                     ),
                     Text(
-                      '☀️$weatherIcon',
+                      '$weatherIcon',
                       style: kConditionTextStyle,
                     )
                   ],
